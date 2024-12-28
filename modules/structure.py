@@ -87,3 +87,22 @@ def uhi_explanation():
         markdown_file = LANGUAGES[selected_language]
         markdown_content = load_markdown(markdown_file)
         st.markdown(markdown_content)
+
+def sdtn_explanation():
+    LANGUAGES = {
+        "English": CONTENT_DIR / "sdtn_english.md",
+        "Français": CONTENT_DIR / "sdtn_french.md",
+        "Deutsch": CONTENT_DIR / "sdtn_german.md",
+    }
+    selected_language = st.selectbox(
+        "Select Language / Choisissez la langue / Sprache wählen",
+        options=['None'] + list(LANGUAGES.keys()),
+        index=0,
+        key='sdtn_language'
+    )
+    if selected_language == "None":
+        return
+    else:
+        markdown_file = LANGUAGES[selected_language]
+        markdown_content = load_markdown(markdown_file)
+        st.markdown(markdown_content)

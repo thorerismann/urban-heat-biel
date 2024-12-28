@@ -1,0 +1,10 @@
+
+[theme]
+base = "dark"  # Options: "dark" or "light"
+primaryColor="#ce0909"
+backgroundColor="#0e1935"
+secondaryBackgroundColor="#5d5f6d"
+textColor="#ece8e8"
+
+[layout]
+wideMode = true

@@ -5,14 +5,18 @@ from pathlib import Path
 import pydeck as pdk
 import ast  # To safely evaluate strings into Python objects
 from modules.fitnah_visuals import *
-from modules.structure import main_display, fitnah_explanation, uhi_explanation
+from modules.structure import main_display, fitnah_explanation, uhi_explanation, sdtn_explanation
 
 
 # -------------------------------------------------------------------
 # 1) App Setup
 # -------------------------------------------------------------------
 def main():
-
+    st.set_page_config(
+        page_title="Hot Biel Summer",
+        page_icon="🌞",
+        layout="wide"
+    )
     main_display()
     city = st.selectbox('Select a city:', ['biel', 'bern'])
     fitnah_path = Path.cwd() / 'data' / city / 'data_viz_fitnah.csv'
@@ -99,6 +103,7 @@ def main():
         daily_data = pd.read_csv(daily_stats_path)
         sdtn_data = pd.read_csv(sdtn_path)
         sdtn_geo = daily_data.merge(sdtn_data[['Name','logger','x','y']], how='left', on='logger')
+        sdtn_explanation()
         s1, s2 = st.columns([2,1])
         with s1:
             metric = st.radio(
