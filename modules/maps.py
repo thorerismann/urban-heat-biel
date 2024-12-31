@@ -204,8 +204,11 @@ def plot_geodata(df, selection, maptype, langdict):
 
 
 def update_with_swisstopo(fig, maptype):
-    newmap = map_dict[maptype]
-    mapstring = f'https://wmts.geo.admin.ch/1.0.0/{newmap}/default/current/3857/'
+    if (maptype == 'Carte nationale suisse en couleur') | (maptype == 'Schweizer Landeskarte Farbe') | (maptype == 'Swiss national map color'):
+        mtype = map_dict['Swiss national map color']
+    else:
+        mtype = map_dict['Swiss national map gray']
+    mapstring = f'https://wmts.geo.admin.ch/1.0.0/{mtype}/default/current/3857/'
     newfig = fig.update_layout(
         map_style="white-bg",
         map_layers=[

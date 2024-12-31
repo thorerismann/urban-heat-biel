@@ -8,22 +8,32 @@ def get_files(city, period):
     fitnah_path = Path.cwd() / 'data' / city / 'data_viz_fitnah.csv'
     landuse_path = Path.cwd() / 'data' / city / 'data_viz_land_use.csv'
 
-    if (city == 'bern') & (period == 'Whole summer'):
-        uhi_path = Path.cwd() / 'data' / city / 'summer22_hourly_uhi_cis.csv'
-        tempstats = Path.cwd() / 'data' / city / 'summer22_temp_stats.csv'
-        sdtn = Path.cwd() / 'data' / city / 'summer22_sdtn.csv'
-    if (city == 'bern') & (period == 'Main Heatwave'):
-        uhi_path = Path.cwd() / 'data' / city / 'heatwave_22_hourly_uhi_ci.csv'
-        tempstats = Path.cwd() / 'data' / city / 'heatwave_22_temp_stats.csv'
-        sdtn = Path.cwd() / 'data' / city / 'heatwave_22_sdtn.csv'
-    if (city == 'biel') & (period == 'Whole summer'):
-        uhi_path = Path.cwd() / 'data' / city / 'summer23_hourly_uhi_ci.csv'
-        tempstats = Path.cwd() / 'data' / city / 'summer23_temp_stats.csv'
-        sdtn = Path.cwd() / 'data' / city / 'summer23_sdtn.csv'
-    if (city == 'biel') & (period == 'Main Heatwave'):
-        uhi_path = Path.cwd() / 'data' / city / 'heatwave_23_hourly_uhi_ci.csv'
-        tempstats = Path.cwd() / 'data' / city / 'heatwave_23_temp_stats.csv'
-        sdtn = Path.cwd() / 'data' / city / 'heatwave_23_sdtn.csv'
+    if (period == 'Main Heatwave') | (period == 'Principale vague de chaleur') | (period == 'Haupt-Hitzewelle'):
+        hw = True
+    else:
+        hw = False
+
+    if city == 'bern':
+        if hw:
+            uhi_path = Path.cwd() / 'data' / city / 'heatwave_22_hourly_uhi_ci.csv'
+            tempstats = Path.cwd() / 'data' / city / 'heatwave_22_temp_stats.csv'
+            sdtn = Path.cwd() / 'data' / city / 'heatwave_22_sdtn.csv'
+        else:
+            uhi_path = Path.cwd() / 'data' / city / 'summer22_hourly_uhi_cis.csv'
+            tempstats = Path.cwd() / 'data' / city / 'summer22_temp_stats.csv'
+            sdtn = Path.cwd() / 'data' / city / 'summer22_sdtn.csv'
+
+    if city == 'biel':
+        if hw:
+            uhi_path = Path.cwd() / 'data' / city / 'heatwave_23_hourly_uhi_ci.csv'
+            tempstats = Path.cwd() / 'data' / city / 'heatwave_23_temp_stats.csv'
+            sdtn = Path.cwd() / 'data' / city / 'heatwave_23_sdtn.csv'
+
+        else:
+            uhi_path = Path.cwd() / 'data' / city / 'summer23_hourly_uhi_ci.csv'
+            tempstats = Path.cwd() / 'data' / city / 'summer23_temp_stats.csv'
+            sdtn = Path.cwd() / 'data' / city / 'summer23_sdtn.csv'
+
 
 
     return landuse_path, fitnah_path, uhi_path, tempstats, sdtn
@@ -103,6 +113,6 @@ sensor_labels = {
 }
 
 map_dict = {
-    'Swiss National Map Color': "ch.swisstopo.pixelkarte-farbe",
-    'Swiss National Map Grey': "ch.swisstopo.pixelkarte-grau",
+    'Swiss national map color': "ch.swisstopo.pixelkarte-farbe",
+    'Swiss national map gray': "ch.swisstopo.pixelkarte-grau",
 }
