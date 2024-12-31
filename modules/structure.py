@@ -1,32 +1,43 @@
 import streamlit as st
 from pathlib import Path
+from content.lang_dict import eng_dict, de_dict, fr_dict
 
 CONTENT_DIR = Path.cwd() / "content"
 
-def main_display():
-    st.title("Hot Biel Summer")
+def get_files(city, period):
+    fitnah_path = Path.cwd() / 'data' / city / 'data_viz_fitnah.csv'
+    landuse_path = Path.cwd() / 'data' / city / 'data_viz_land_use.csv'
 
-    # Language options with file mappings
-    LANGUAGES = {
-        "English": CONTENT_DIR / "welcome.md",
-        "Français": CONTENT_DIR / "bienvenue.md",
-        "Deutsch": CONTENT_DIR / "wilkomen.md",
-    }
-    st.text('This app visualizes the UHI data available for Biel/Bienne from the summer 2023 measurement campaign. Expand below for more information.')
-    selected_language = st.selectbox(
-        "Select Language / Choisissez la langue / Sprache wählen",
-        options=['None'] + list(LANGUAGES.keys()),
-        index=0,
-        key='main_language'# Default to English
-    )
+    if (city == 'bern') & (period == 'Whole summer'):
+        uhi_path = Path.cwd() / 'data' / city / 'summer22_hourly_uhi_cis.csv'
+        tempstats = Path.cwd() / 'data' / city / 'summer22_temp_stats.csv'
+        sdtn = Path.cwd() / 'data' / city / 'summer22_sdtn.csv'
+    if (city == 'bern') & (period == 'Main Heatwave'):
+        uhi_path = Path.cwd() / 'data' / city / 'heatwave_22_hourly_uhi_ci.csv'
+        tempstats = Path.cwd() / 'data' / city / 'heatwave_22_temp_stats.csv'
+        sdtn = Path.cwd() / 'data' / city / 'heatwave_22_sdtn.csv'
+    if (city == 'biel') & (period == 'Whole summer'):
+        uhi_path = Path.cwd() / 'data' / city / 'summer23_hourly_uhi_ci.csv'
+        tempstats = Path.cwd() / 'data' / city / 'summer23_temp_stats.csv'
+        sdtn = Path.cwd() / 'data' / city / 'summer23_sdtn.csv'
+    if (city == 'biel') & (period == 'Main Heatwave'):
+        uhi_path = Path.cwd() / 'data' / city / 'heatwave_23_hourly_uhi_ci.csv'
+        tempstats = Path.cwd() / 'data' / city / 'heatwave_23_temp_stats.csv'
+        sdtn = Path.cwd() / 'data' / city / 'heatwave_23_sdtn.csv'
 
-    # Load and display the selected language's markdown content
-    if selected_language == "None":
-        return
-    else:
-        markdown_file = LANGUAGES[selected_language]
-        markdown_content = load_markdown(markdown_file)
-        st.markdown(markdown_content)
+
+    return landuse_path, fitnah_path, uhi_path, tempstats, sdtn
+
+
+def get_lang_dict():
+    lang = st.selectbox('Choose Language / choisir langue / Sprache wählen', ['DE', 'EN', 'FR'])
+    if lang == 'DE':
+        return de_dict
+    if lang == 'EN':
+        return eng_dict
+    if lang == 'FR':
+        return fr_dict
+
 
 def load_markdown(file_path: Path) -> str:
     """
@@ -48,61 +59,50 @@ def load_markdown(file_path: Path) -> str:
     except FileNotFoundError:
         return f"Error: {file_path.name} not found."
 
+sensor_labels = {
+    206: 'rural reference',
+    228: 'Südstrasse',
+    217: 'Geyisreid',
+    205: 'Ile de la Suze',
+    221: 'Champagne-Piano',
+    227: 'Altersheim-redenweg',
+    216: 'Nidau-mittestrasse',
+    211: 'Mühlefeld',
+    226: 'Port Thielle',
+    213: 'Port NBK',
+    235: 'Altersheim-Reid',
+    225: 'Swisstennis',
+    207: 'Swiss Meteo Reference',
+    237: 'Rolex',
+    236: 'Taubenloch',
+    224: 'Bözingen',
+    234: 'Bözingenfeld',
+    223: 'Altersheim-erlacher',
+    240: 'Längholz-replacement',
+    214: 'Längholz',
+    208: 'Möösli',
+    220: 'Altersheim-Neumarkt',
+    219: 'New City',
+    238: 'Museum',
+    232: 'Champagne-Blumen',
+    215: 'Old City',
+    222: 'Spital',
+    204: 'Stadtpark',
+    230: 'Vingelz',
+    201: 'Robert-Walser-Platz',
+    233: 'Madretsch-Zukunft',
+    218: 'Bahnhof',
+    212: 'Seepark',
+    210: 'Congresshaus',
+    209: 'Madrestch-Piano',
+    229: 'Viaductstrasse',
+    203: 'Zentralplatz',
+    231: 'Nidau-Lac',
+    239: 'Nidau-wald',
+    202: 'Hafen'
+}
 
-
-def fitnah_explanation():
-    LANGUAGES = {
-        "English": CONTENT_DIR / "fitnah_english.md",
-        "Français": CONTENT_DIR / "fitnah_french.md",
-        "Deutsch": CONTENT_DIR / "fitnah_german.md",
-    }
-    selected_language = st.selectbox(
-        "Select Language / Choisissez la langue / Sprache wählen",
-        options=['None'] + list(LANGUAGES.keys()),
-        index=0,
-        key = 'fitnah_language'
-    )
-    if selected_language == "None":
-        return
-    else:
-        markdown_file = LANGUAGES[selected_language]
-        markdown_content = load_markdown(markdown_file)
-        st.markdown(markdown_content)
-
-def uhi_explanation():
-    LANGUAGES = {
-        "English": CONTENT_DIR / "uhi_english.md",
-        "Français": CONTENT_DIR / "uhi_french.md",
-        "Deutsch": CONTENT_DIR / "uhi_german.md",
-    }
-    selected_language = st.selectbox(
-        "Select Language / Choisissez la langue / Sprache wählen",
-        options=['None'] + list(LANGUAGES.keys()),
-        index=0,
-        key='uhi_language'
-    )
-    if selected_language == "None":
-        return
-    else:
-        markdown_file = LANGUAGES[selected_language]
-        markdown_content = load_markdown(markdown_file)
-        st.markdown(markdown_content)
-
-def sdtn_explanation():
-    LANGUAGES = {
-        "English": CONTENT_DIR / "sdtn_english.md",
-        "Français": CONTENT_DIR / "sdtn_french.md",
-        "Deutsch": CONTENT_DIR / "sdtn_german.md",
-    }
-    selected_language = st.selectbox(
-        "Select Language / Choisissez la langue / Sprache wählen",
-        options=['None'] + list(LANGUAGES.keys()),
-        index=0,
-        key='sdtn_language'
-    )
-    if selected_language == "None":
-        return
-    else:
-        markdown_file = LANGUAGES[selected_language]
-        markdown_content = load_markdown(markdown_file)
-        st.markdown(markdown_content)
+map_dict = {
+    'Swiss National Map Color': "ch.swisstopo.pixelkarte-farbe",
+    'Swiss National Map Grey': "ch.swisstopo.pixelkarte-grau",
+}
