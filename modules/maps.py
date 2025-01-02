@@ -204,7 +204,7 @@ def plot_geodata(df, selection, maptype, langdict):
 
 
 def update_with_swisstopo(fig, maptype):
-    if maptype in ['Carte nationale suisse en couleur', 'Schweizer Landeskarte Farbe', 'Swiss national map color']:
+    if maptype in ['Carte nationale suisse en couleur', 'Schweizer Landeskarte Farbe', 'Swiss National Map Color']:
         mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg'
     elif maptype == 'SwissAlti3D':
         mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png'
