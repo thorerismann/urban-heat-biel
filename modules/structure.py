@@ -111,8 +111,3 @@ sensor_labels = {
     239: 'Nidau-wald',
     202: 'Hafen'
 }
-
-map_dict = {
-    'Swiss national map color': "ch.swisstopo.pixelkarte-farbe",
-    'Swiss national map gray': "ch.swisstopo.pixelkarte-grau",
-}

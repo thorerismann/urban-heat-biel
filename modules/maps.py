@@ -13,7 +13,7 @@ import numpy as np
 import streamlit as st
 import plotly.express as px
 import pandas as pd
-from .structure import sensor_labels, map_dict
+from .structure import sensor_labels
 
 def plot_fitnah_map(
     sel_data: pd.DataFrame,
@@ -204,11 +204,16 @@ def plot_geodata(df, selection, maptype, langdict):
 
 
 def update_with_swisstopo(fig, maptype):
-    if (maptype == 'Carte nationale suisse en couleur') | (maptype == 'Schweizer Landeskarte Farbe') | (maptype == 'Swiss national map color'):
-        mtype = map_dict['Swiss national map color']
+    if maptype in ['Carte nationale suisse en couleur', 'Schweizer Landeskarte Farbe', 'Swiss national map color']:
+        mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg'
+    elif maptype == 'SwissAlti3D':
+        mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.swissalti3d-reliefschattierung/default/current/3857/{z}/{x}/{y}.png'
+    elif maptype in ['Bodenbedeckung', 'Landcover', 'Couverture du sol']:
+        mapstring = "https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.vec200-landcover/default/current/3857/{z}/{x}/{y}.png"
+
     else:
-        mtype = map_dict['Swiss national map gray']
-    mapstring = f'https://wmts.geo.admin.ch/1.0.0/{mtype}/default/current/3857/'
+        mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-grau/default/current/3857/{z}/{x}/{y}.jpeg'
+
     newfig = fig.update_layout(
         map_style="white-bg",
         map_layers=[
@@ -218,7 +223,7 @@ def update_with_swisstopo(fig, maptype):
                 "sourceattribution": "© swisstopo",
                 "opacity": 0.4,
                 "source": [
-                    mapstring + "{z}/{x}/{y}.jpeg"
+                    mapstring
                 ]
             }
         ],

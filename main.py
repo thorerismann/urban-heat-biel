@@ -19,42 +19,35 @@ def main():
         layout="wide"
     )
     st.title('Welcome to the Hot Biel Summer App')
-    st.markdown(
-        """
-        **Select a language below** and click on the welcome text to see more information about the project.
-        Otherwise, feel free to explore each tab!
-        _Note: Full translations, such as on charts, are not yet complete._
-        """
-    )
+    with st.expander("See Welcome Menu, Voir le menu de bienvenue, Schauen Sie im Willkommensmenü nach"):
+        st.markdown(
+            """
+            **Select a language below** and click on the welcome text to see more information about the project.
+            Otherwise, feel free to explore each tab!
+            _Note: Full translations, such as on charts, are not yet complete._
+            
+            **Sélectionnez une langue ci-dessous** et cliquez sur le texte de bienvenue pour en savoir plus sur le projet.
+            Sinon, explorez librement chaque onglet !
+            _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._
+            
+            **Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
+            Ansonsten können Sie die Registerkarten erkunden!
+            _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
+            """
+        )
 
-    # French
-    st.markdown(
-        """
-        **Sélectionnez une langue ci-dessous** et cliquez sur le texte de bienvenue pour en savoir plus sur le projet.
-        Sinon, explorez librement chaque onglet !
-        _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._
-        """
-    )
+        langdict = get_lang_dict()
+        m1, m2, m3 = st.columns(3)
+        with m1:
+            city = st.radio(langdict['city'], ['biel', 'bern'])
+        with m2:
+            period = st.radio(langdict['period'], langdict['period_choice'])
+        with m3:
+            basemap = st.radio(langdict['basemap'], langdict['map_choice'])
+        st.info(langdict['date_info'])
 
-    # German
-    st.markdown(
-        """
-        **Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
-        Ansonsten können Sie die Registerkarten erkunden!
-        _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
-        """
-    )
-    langdict = get_lang_dict()
     with st.expander(langdict['welcome_md_t']):
         st.markdown(load_markdown(langdict['welcome_md']))
-    m1, m2, m3 = st.columns(3)
-    with m1:
-        city = st.radio(langdict['city'], ['biel', 'bern'])
-    with m2:
-        period = st.radio(langdict['period'], langdict['period_choice'])
-    with m3:
-        basemap = st.radio(langdict['basemap'], langdict['map_choice'])
-    st.info(langdict['date_info'])
     lu_path, f_path, u_path, tpath, spath = get_files(city, period)
     year = '23' if city == 'biel' else '22'
     sdtn_path = Path.cwd() / 'data' / city / f'summer{year}_sdtn.csv'

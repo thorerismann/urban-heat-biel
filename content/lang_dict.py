@@ -33,7 +33,7 @@ eng_dict = {
     'uhi_hour_title': 'UHI Hourly Evolution',
     'aggregator': 'Select geospatial aggregator for visualization:',
     'period_choice': ['Whole summer', 'Main Heatwave'],
-    'map_choice': ['Swiss National Map Color', 'Swiss National Map Grey'],
+    'map_choice': ['Swiss National Map Color', 'Swiss National Map Grey', 'SwissAlti3D', 'Landcover'],
     'description_dict': {
         20: "Buildings",
         22: "Paved",
@@ -93,7 +93,7 @@ de_dict = {
     'uhi_hour_title': 'Stündliche Entwicklung des UHI',
     'aggregator': 'Wählen Sie einen geospatialen Aggregator für die Visualisierung:',
     'period_choice': ['Ganzer Sommer', 'Haupt-Hitzewelle'],
-    'map_choice': ['Schweizer Landeskarte Farbe', 'Schweizer Landeskarte Grau'],
+    'map_choice': ['Schweizer Landeskarte Farbe', 'Schweizer Landeskarte Grau', 'SwissAlti3D', 'Bodenbedeckung'],
     'description_dict':{
         20: "Gebäude",
         22: "Gepflastert",
@@ -151,7 +151,7 @@ fr_dict = {
     'uhi_hour_title': 'Évolution horaire de l’UHI',
     'aggregator': 'Sélectionnez un agrégateur géospatial pour la visualisation :',
     'period_choice': ['Tout l’été', 'Principale vague de chaleur'],
-    'map_choice': ['Carte nationale suisse en couleur', 'Carte nationale suisse en gris'],
+    'map_choice': ['Carte nationale suisse en couleur', 'Carte nationale suisse en gris', 'SwissAlti3D', 'Couverture du sol'],
     'description_dict': {
         20: "Bâtiments",
         22: "Pavé",
