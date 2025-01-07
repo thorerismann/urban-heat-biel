@@ -24,7 +24,7 @@ eng_dict = {
     'period': 'Select a period',
     'basemap': 'Select basemap',
     'date_info':'The Biel data is from May 15th - Sep 15th 2023 and the Bern data is from May 15th - Sep 15th 2022. The meanheatwave in Biel occured in in August 2023, while in Bern it was in July 2022.',
-    'tabs': ["UHI & City Index", "Tropical Nights & Summer Days", "Landuse and Elevation", "Hourly Evolution of the UHI & City Index", "FITNAH Model"],
+    'tabs': ["UHI & City Index", "Tropical Nights & Summer Days", "Landuse and Elevation", "Hourly Evolution of the UHI & City Index", "FITNAH Model", "Explanation"],
     'uhi_warning': 'Please select at least one logger to see the time evolution plot.',
     'fitnah_title': 'Fitnah Station Values',
     'uhi_title': 'UHI and City Index Visualization',
@@ -45,7 +45,18 @@ eng_dict = {
         25: "Forest",
         16: "Rock",
         27: "Barren"
-    }
+    },
+    'welcome_t': 'Welcome to the Hot Biel Summer App',
+    'sensor_count': "Number of stations",
+    'exceedences_title': "Distribution of Exceedances (Threshold = ",
+    'sdays_select': 'Summer days Threshold (°C)',
+    'nights_select': "Tropical Nights Threshold (°C)",
+    'sdays_selection': "Summer Days",
+    'nights_selection': "Tropical Nights",
+    "welcome_message": """
+            **Select a language below** and click on the welcome text to see more information about the project.
+            Otherwise, feel free to explore each tab!
+            _Note: Full translations, such as on charts, are not yet complete._"""
 }
 
 de_dict = {
@@ -83,7 +94,8 @@ de_dict = {
         "Tropennächte & Sommertage",
         "Landnutzung und Höhe",
         "Stündliche Entwicklung von UHI & Stadtindex",
-        "FITNAH-Modell"
+        "FITNAH-Modell",
+        "Erläuterung"
     ],
     'uhi_warning': 'Bitte wählen Sie mindestens einen Logger aus, um das Zeitentwicklungsdiagramm anzuzeigen.',
     'fitnah_title': 'FITNAH-Stationenwerte',
@@ -105,7 +117,18 @@ de_dict = {
         25: "Wald",
         16: "Felsen",
         27: "Ödland"
-    }
+    },
+    'welcome_t': 'Wilkommen zur Hot Biel Summer App !',
+    'sensor_count': "Anzahl Loggers",
+    'exceedences_title': "Verteilung der Überschreitungen (Schwellenwert = ",
+    'sdays_select': "Schwellenwert für Sommertage (°C)",
+    'nights_select': "Schwellenwert für Tropennachte (°C)",
+    'sdays_selection': "Sommertage",
+    'nights_selection': "Nuits tropicales",
+    'welcome_message': """**Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
+            Ansonsten können Sie die Registerkarten erkunden!
+            _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
+            """
 }
 fr_dict = {
     'fitnah_md_t': 'Afficher l’explication de FITNAH',
@@ -141,7 +164,8 @@ fr_dict = {
         "Nuits tropicales & Journées estivales",
         "Occupation du sol et altitude",
         "Évolution horaire de l’UHI & de l’Indice de la ville",
-        "Modèle FITNAH"
+        "Modèle FITNAH",
+        "Explication"
     ],
     'uhi_warning': 'Veuillez sélectionner au moins un enregistreur pour afficher le graphique d’évolution temporelle.',
     'fitnah_title': 'Valeurs des stations FITNAH',
@@ -164,6 +188,15 @@ fr_dict = {
         16: "Roche",
         27: "Nu"
     },
-
+    'welcome_t': 'Bienvenue à la Hot Biel Summer App',
+    'sensor_count': "Nombre de stations",
+    'exceedences_title': "Répartition des dépassements (Seuil = ",
+    'sdays_select': "Seuil des jours d'été (°C)",
+    'nights_select': "Seuil des nuits tropicales (°C)",
+    'sdays_selection': "Jours d'été",
+    'nights_selection': "Nuits tropicales",
+    'welcome_message': """**Sélectionnez une langue ci-dessous** et cliquez sur le texte de bienvenue pour en savoir plus sur le projet.
+            Sinon, explorez librement chaque onglet !
+            _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._"""
 
 }

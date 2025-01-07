@@ -18,43 +18,24 @@ def main():
         page_icon="🌞",
         layout="wide"
     )
-    st.title('Welcome to the Hot Biel Summer App')
-    with st.expander("See Welcome Menu, Voir le menu de bienvenue, Schauen Sie im Willkommensmenü nach"):
-        st.markdown(
-            """
-            **Select a language below** and click on the welcome text to see more information about the project.
-            Otherwise, feel free to explore each tab!
-            _Note: Full translations, such as on charts, are not yet complete._
-            
-            **Sélectionnez une langue ci-dessous** et cliquez sur le texte de bienvenue pour en savoir plus sur le projet.
-            Sinon, explorez librement chaque onglet !
-            _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._
-            
-            **Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
-            Ansonsten können Sie die Registerkarten erkunden!
-            _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
-            """
-        )
-
-        langdict = get_lang_dict()
-        m1, m2, m3 = st.columns(3)
-        with m1:
-            city = st.radio(langdict['city'], ['biel', 'bern'])
-        with m2:
-            period = st.radio(langdict['period'], langdict['period_choice'])
-        with m3:
-            basemap = st.radio(langdict['basemap'], langdict['map_choice'])
-        st.info(langdict['date_info'])
-
-    with st.expander(langdict['welcome_md_t']):
-        st.markdown(load_markdown(langdict['welcome_md']))
+    langdict = get_lang_dict()
+    st.title(langdict['welcome_t'])
+    st.markdown(langdict['welcome_message'])
+    m1, m2, m3 = st.columns([1,1,2])
+    with m1:
+        city = st.radio(langdict['city'], ['biel', 'bern'], horizontal=True)
+    with m2:
+        period = st.radio(langdict['period'], langdict['period_choice'], horizontal=True)
+    with m3:
+        basemap = st.radio(langdict['basemap'], langdict['map_choice'], horizontal=True)
+    st.info(langdict['date_info'])
     lu_path, f_path, u_path, tpath, spath = get_files(city, period)
     year = '23' if city == 'biel' else '22'
     sdtn_path = Path.cwd() / 'data' / city / f'summer{year}_sdtn.csv'
 
     # Create tabs
 
-    tab_station_map, tab_tn_sd, tab_geo_map, tab_hourly_evolution, tab_fitnah_map,  = st.tabs(langdict['tabs'])
+    tab_station_map, tab_tn_sd, tab_geo_map, tab_hourly_evolution, tab_fitnah_map, tab_explanation = st.tabs(langdict['tabs'])
 
     # -------------------------------------------------------------------
     # 2) Hourly Data
@@ -73,12 +54,13 @@ def main():
 
     with tab_fitnah_map:
         fitnah_tab(f_path, basemap, langdict)
+    with tab_explanation:
+        st.markdown(load_markdown(langdict['welcome_md']))
 
 
 def uhi_city_index(uhi_path, basemap, langdict):
     st.subheader(langdict['uhi_title'])
-    with st.expander(langdict['uhi_md_t']):
-        st.markdown(load_markdown(langdict['uhi_md']))
+
     u1, u2 = st.columns(2)
     # Select Data Type (UHI or City Index)
     with u1:
@@ -99,27 +81,29 @@ def uhi_city_index(uhi_path, basemap, langdict):
 
         plot_uhi_ci_histogram(selected_data, data_type, hour, 30)
 
+    with st.expander(langdict['uhi_md_t']):
+        st.markdown(load_markdown(langdict['uhi_md']))
+
 def tn_sd(sdtn_path, daily_stats_path, basemap, langdict):
     st.subheader(langdict['sdtn_title'])
     daily_data = pd.read_csv(daily_stats_path)
     sdtn_data = pd.read_csv(sdtn_path)
     sdtn_geo = daily_data.merge(sdtn_data[['Name', 'logger', 'x', 'y']], how='left', on='logger')
-    with st.expander(langdict['sdtn_md_t']):
-        st.markdown(load_markdown(langdict['sdtn_md']))
 
     s1, s2 = st.columns([2, 1])
     with s1:
         metric = st.radio(
             langdict['dtype_tnsd'],
-            ["Summer Days (daily_max)", "Tropical Nights (daily_min)"]
+            [langdict['sdays_selection'], langdict['nights_selection']],
+            horizontal=True
         )
 
-        if "Summer" in metric:
-            threshold_label = "Summer Days Threshold (°C)"
+        if metric == langdict['sdays_selection']:
+            threshold_label = langdict['sdays_select']
             default_threshold = 30
             data_col = "daily_max"
         else:
-            threshold_label = "Tropical Nights Threshold (°C)"
+            threshold_label = langdict['nights_select']
             default_threshold = 20
             data_col = "daily_min"
     with s2:
@@ -134,12 +118,13 @@ def tn_sd(sdtn_path, daily_stats_path, basemap, langdict):
     with tncol1:
         summary = sdtn_map(sdtn_geo, data_col, metric, threshold, basemap)
     with tncol2:
-        tn_sd_histogram(summary, threshold)
+        tn_sd_histogram(summary, threshold, langdict)
+    with st.expander(langdict['sdtn_md_t']):
+        st.markdown(load_markdown(langdict['sdtn_md']))
 
 def hourly_evolution(uhi_path, langdict):
     st.subheader(langdict['uhi_hour_title'])
     station_data = pd.read_csv(uhi_path)
-    # 1) Let user choose 'uhi' or 'city_index'
     h1, h2 = st.columns([1, 2])
     with h1:
         data_type = st.radio(langdict['dtype_uhi'], ["uhi", "city_index"], index=0)
@@ -160,8 +145,6 @@ def hourly_evolution(uhi_path, langdict):
 
 def fitnah_tab(fitnah_path, basemap, langdict):
     st.subheader(langdict['fitnah_title'])
-    with st.expander(langdict['fitnah_md_t']):
-        st.markdown(load_markdown(langdict['fitnah_md']))
     # Read in the data for the selected city
     fitnah_data = pd.read_csv(fitnah_path)
 
@@ -191,6 +174,9 @@ def fitnah_tab(fitnah_path, basemap, langdict):
 
         plot_fitnah_histogram(sel_fitnah_data, aggregator, dtype, buffer_size)
 
+    with st.expander(langdict['fitnah_md_t']):
+        st.markdown(load_markdown(langdict['fitnah_md']))
+
 
 def tab_explore_geodata(landuse_path, basemap, langdict):
     st.subheader(langdict['geo_title'])
@@ -209,7 +195,6 @@ def tab_explore_geodata(landuse_path, basemap, langdict):
         plot_geodata(sel_data, landuse_type, basemap, langdict)
     with geo2:
         geodata_histogram(sel_data, landuse_type, buffer, langdict)
-
 
 
 # 6) Entry Point

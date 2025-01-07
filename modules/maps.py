@@ -84,21 +84,15 @@ def sdtn_map(data: pd.DataFrame, data_col: str, metric: str, threshold: int, map
     maptype:
         maptype to use in background
     """
-    st.subheader("Summer Days & Tropical Nights")
-
-    # 1) Metric and Threshold Selection
-
-    # 2) Calculate Exceedances
-    # Count days above the threshold for each logger
     data["exceed_count"] = (data[data_col] > threshold).astype(int)
     reference_threshold = 30 if "Summer" in metric else 20
     data["reference_count"] = (data[data_col] > reference_threshold).astype(int)
 
-    # Group by logger for plotting
     station_summary = data.groupby(["logger", "Name", "x", "y"], as_index=False).agg(
         exceed_count=("exceed_count", "sum"),
         reference_count=("reference_count", "sum"),
     )
+
     fig = px.scatter_map(
         station_summary,
         lat="y",

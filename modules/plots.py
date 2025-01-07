@@ -144,14 +144,13 @@ def plot_uhi_ci_histogram(
 
 
 
-def tn_sd_histogram(station_summary, threshold):
-    st.markdown(f"##### Histogram of Exceedances > {threshold} °C")
+def tn_sd_histogram(station_summary, threshold, lang_dict):
     fig_hist = px.histogram(
         station_summary,
         x="exceed_count",
         nbins=20,
-        title=f"Distribution of Exceedances (Threshold={threshold} °C)",
-        labels={"exceed_count": "Number of Sensors"},
+        title=lang_dict['exceedences_title'] + f'{threshold} °C)',
+        labels={"exceed_count": lang_dict['sensor_count']},
         height=600,
         width=500
     )
@@ -191,8 +190,8 @@ def plot_fitnah_histogram(
         sel_fitnah_data,
         x=aggregator,
         nbins=bins,
-        title=f"Histogram of {dtype} {aggregator} with buffer {buffer}",
-        labels={aggregator: f"{aggregator.capitalize()} Value"},
+        title="Histogram {dtype} {aggregator}, {buffer}m",
+        labels={aggregator: aggregator.capitalize()},
         height=550,
         width=500
     )
