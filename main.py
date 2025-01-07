@@ -35,16 +35,17 @@ def main():
 
     # Create tabs
 
-    tab_station_map, tab_tn_sd, tab_geo_map, tab_hourly_evolution, tab_fitnah_map, tab_explanation = st.tabs(langdict['tabs'])
+    tab_tn_sd, tab_station_map, tab_geo_map, tab_hourly_evolution, tab_fitnah_map, tab_explanation = st.tabs(langdict['tabs'])
 
     # -------------------------------------------------------------------
     # 2) Hourly Data
     # -------------------------------------------------------------------
-    with tab_station_map:
-        uhi_city_index(u_path, basemap, langdict)
 
     with tab_tn_sd:
         tn_sd(sdtn_path, tpath, basemap, langdict)
+
+    with tab_station_map:
+        uhi_city_index(u_path, basemap, langdict)
 
     with tab_geo_map:
         tab_explore_geodata(lu_path, basemap, langdict)
