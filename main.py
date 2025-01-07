@@ -19,6 +19,7 @@ def main():
         layout="wide"
     )
     langdict = get_lang_dict()
+    st.write(langdict)
     st.title(langdict['welcome_t'])
     st.markdown(langdict['welcome_message'])
     m1, m2, m3 = st.columns([1,1,2])

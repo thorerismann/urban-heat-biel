@@ -124,7 +124,7 @@ de_dict = {
     'sdays_select': "Schwellenwert für Sommertage (°C)",
     'nights_select': "Schwellenwert für Tropennachte (°C)",
     'sdays_selection': "Sommertage",
-    'nights_selection': "Nuits tropicales",
+    'nights_selection': "Tropennachte",
     'welcome_message': """**Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
             Ansonsten können Sie die Registerkarten erkunden!
             _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
