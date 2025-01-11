@@ -15,7 +15,7 @@ eng_dict = {
     'sdtn_md': CONTENT_DIR / 'sdtn_english.md',
     'buffer': 'Select Buffer Radius',
     'Sensor': 'Select one or more loggers to plot',
-    'Hour': 'Select Hour (24 hour format)',
+    'Hour': 'Hour',
     'dtype_uhi': 'Select UHI or City Index',
     'dtype_tnsd': 'Select Tropical Nights or Summer Days',
     'dtype_landuse': 'Select landuse type',
@@ -56,7 +56,9 @@ eng_dict = {
     "welcome_message": """
             **Select a language below** and click on the welcome text to see more information about the project.
             Otherwise, feel free to explore each tab!
-            _Note: Full translations, such as on charts, are not yet complete._"""
+            _Note: Full translations, such as on charts, are not yet complete._""",
+    'frequency': 'Frequency',
+    'hourly_evol_title': 'Hourly evolution of selected loggers for:',
 }
 
 de_dict = {
@@ -75,7 +77,7 @@ de_dict = {
 
     'buffer': 'Buffer-Radius auswählen',
     'Sensor': 'Wähle einen oder mehrere Logger aus',
-    'Hour': 'Stunde auswählen (24-Stunden-Format)',
+    'Hour': 'Stunde',
     'dtype_uhi': 'UHI oder Stadtindex auswählen',
     'dtype_tnsd': 'Tropennächte oder Sommertage auswählen',
     'dtype_landuse': 'Landnutzungstyp auswählen',
@@ -146,7 +148,7 @@ fr_dict = {
 
     'buffer': 'Sélectionner le rayon du buffer',
     'Sensor': 'Sélectionner un ou plusieurs enregistreurs à tracer',
-    'Hour': 'Sélectionner l’heure (format 24 heures)',
+    'Hour': 'L’heure',
     'dtype_uhi': 'Sélectionner UHI ou l’Indice de la ville',
     'dtype_tnsd': 'Sélectionner Nuits tropicales ou Journées estivales',
     'dtype_landuse': 'Sélectionner le type d’occupation du sol',

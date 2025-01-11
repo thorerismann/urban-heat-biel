@@ -1,3 +1,19 @@
+"""
+Module: plots
+================
+
+This module provides visualization functions using Plotly for creating histograms,
+line plots, and other interactive plots for geospatial and temporal data.
+
+Functions:
+- geodata_histogram
+- plot_uhi_ci_evolution
+- plot_uhi_ci_histogram
+- tn_sd_histogram
+- plot_fitnah_histogram
+"""
+
+
 import pandas as pd
 import streamlit as st
 import plotly.express as px
@@ -7,30 +23,28 @@ def geodata_histogram(
     dtype: str,
     buffer: int,
     langdict: dict,
-    bins: int = 20
+    bins: int = 20,
 ) -> None:
     """
-    Create and display a histogram of the specified aggregator's values using Plotly.
+    Create and display a histogram of geospatial data within a specified buffer.
 
-    Parameters
-    ----------
+    Parameters:
     sel_geo_data : pd.DataFrame
-        Filtered DataFrame containing the aggregator column.
-    buffer : int
-        The selected buffer chosen by the user.
+        Filtered DataFrame containing geospatial data.
     dtype : str
-        The selected data type (e.g., 'fitnah_ss', 'fitnah_sv', 'fitnah_temp', 'dem') for title labeling.
-    bins : int, optional
-        Number of bins in the histogram, by default 20,
+        Data type for the histogram (e.g., 'fitnah_ss', 'fitnah_sv').
+    buffer : int
+        The buffer distance in meters.
     langdict : dict
-        Language dictionariy
+        Language dictionary for localization.
+    bins : int, optional
+        Number of bins for the histogram (default: 20).
 
-
-    Returns
-    -------
+    Returns:
     None
-        This function displays a Plotly histogram in Streamlit.
+        Displays the histogram in Streamlit.
     """
+
     refdict = {v:str(k) for k,v in langdict['description_dict'].items()}
     fig = px.histogram(
         sel_geo_data,
@@ -52,25 +66,29 @@ def geodata_histogram(
 def plot_uhi_ci_evolution(
     station_data: pd.DataFrame,
     loggers: list,
-    data_type: str
+    data_type: str,
+    lang_dict: dict
 ) -> None:
     """
     Plot the hourly evolution of UHI or City Index for selected loggers.
 
-    Parameters
-    ----------
+    Parameters:
     station_data : pd.DataFrame
-        DataFrame containing columns 'logger', 'hour', and the specified data_type (e.g., 'uhi' or 'city_index').
+        DataFrame containing columns for 'logger', 'hour', and data values.
     loggers : list
-        A list of logger IDs to include in the plot.
+        List of logger IDs to include in the plot.
     data_type : str
-        The data column to plot (e.g., 'uhi' or 'city_index').
+        Data column to plot (e.g., 'uhi', 'city_index').
+    lang_dict : dict
+        Language dictionary for translations
 
-    Returns
-    -------
+
+    Returns:
     None
-        Displays a Plotly line chart in the Streamlit interface.
+        Displays a line chart in Streamlit.
+        :param lang_dict:
     """
+
     # Filter data for the selected loggers
     subset = station_data[station_data["logger"].isin(loggers)].copy()
     if subset.empty:
@@ -86,11 +104,11 @@ def plot_uhi_ci_evolution(
         x="hour",
         y=data_type,  # e.g., "uhi" or "city_index"
         color="logger",
-        title=f"Hourly Evolution of {data_type.capitalize()} for Selected Loggers",
+        title=lang_dict['hourly_evol_title'] + f' {data_type.capitalize()} ',
         markers=True,
         labels={
-            "hour": "Hour of Day",
-            data_type: f"{data_type.capitalize()} Value"
+            "hour": lang_dict['Hour'],
+            data_type: f"{data_type.capitalize()}"
         },
         height=700
     )
@@ -102,41 +120,44 @@ def plot_uhi_ci_evolution(
 def plot_uhi_ci_histogram(
     selected_data: pd.DataFrame,
     data_type: str,
-    hour: int,
-    bins: int = 20
+    hour_str: str,
+    lang_dict: dict,
+    bins: int = 20,
 ) -> None:
     """
-    Create and display a histogram of UHI or City Index values for a specified hour.
+    Create and display a histogram of UHI or City Index values at a specified hour.
 
-    Parameters
-    ----------
+    Parameters:
     selected_data : pd.DataFrame
-        Filtered DataFrame containing columns for 'hour' and the data_type (e.g., 'uhi' or 'city_index').
+        Filtered DataFrame with hourly UHI or City Index data.
     data_type : str
-        The data type to histogram, e.g., 'uhi' or 'city_index'.
+        Data type for the histogram (e.g., 'uhi', 'city_index').
     hour : int
-        The hour of the day (0..23) to visualize.
+        Hour of the day to filter data.
+    lang_dict : dict
+        Language dictionary for translations
     bins : int, optional
-        Number of bins for the histogram, by default 20
+        Number of bins for the histogram (default: 20).
 
-    Returns
-    -------
+    Returns:
     None
-        Displays a Plotly histogram in Streamlit.
+        Displays the histogram in Streamlit.
+        :param hour_str:
     """
+
     fig = px.histogram(
         selected_data,
         x=data_type.lower(),
         nbins=bins,
-        title=f"Histogram of {data_type.capitalize()} Values at Hour {hour}:00",
-        labels={data_type.lower(): f"{data_type} Value"},
+        title=f"{data_type.capitalize()} - {hour_str}:00",
+        labels={data_type.lower(): f"{data_type}"},
         height=600,
         width=500
     )
 
     fig.update_layout(
-        xaxis_title=f"{data_type.capitalize()} Value",
-        yaxis_title="Frequency",
+        xaxis_title=f"{data_type.capitalize()}",
+        yaxis_title=lang_dict['frequency'],
         template="plotly_white",
     )
     st.plotly_chart(fig)
@@ -144,13 +165,33 @@ def plot_uhi_ci_histogram(
 
 
 
-def tn_sd_histogram(station_summary, threshold, lang_dict):
+def tn_sd_histogram(
+    station_summary: pd.DataFrame,
+    threshold: int,
+    lang_dict: dict,
+) -> None:
+    """
+    Create and display a histogram for Summer Days or Tropical Nights threshold exceedances.
+
+    Parameters:
+    station_summary : pd.DataFrame
+        DataFrame summarizing exceedances per station.
+    threshold : int
+        Temperature threshold used for exceedance calculations.
+    lang_dict : dict
+        Language dictionary for localization.
+
+    Returns:
+    None
+        Displays the histogram in Streamlit.
+    """
+
     fig_hist = px.histogram(
         station_summary,
         x="exceed_count",
         nbins=20,
         title=lang_dict['exceedences_title'] + f'{threshold} °C)',
-        labels={"exceed_count": lang_dict['sensor_count']},
+        labels={"exceed_count": lang_dict['frequency']},
         height=600,
         width=500
     )
@@ -162,43 +203,45 @@ def plot_fitnah_histogram(
     aggregator: str,
     dtype: str,
     buffer: int,
-    bins: int = 20
+    lang_dict: dict,
+    bins: int = 20,
 ) -> None:
     """
-    Create and display a histogram of the specified aggregator's values using Plotly.
+    Create and display a histogram for Fitnah data using a specified aggregator.
 
-    Parameters
-    ----------
+    Parameters:
     sel_fitnah_data : pd.DataFrame
-        Filtered DataFrame containing the aggregator column.
+        Filtered DataFrame with aggregated Fitnah data.
     aggregator : str
-        The name of the aggregator column to use in the histogram (e.g., 'min', 'max', 'mean', 'count').
+        Aggregator column for histogram values (e.g., 'min', 'max', 'mean').
     dtype : str
-        The selected data type (e.g., 'fitnah_ss', 'fitnah_sv', 'fitnah_temp', 'dem') for title labeling.
-    buffer: int
-        The buffer chosen by user
+        Data type for the histogram (e.g., 'fitnah_ss', 'fitnah_sv').
+    buffer : int
+        Buffer distance in meters.
+    lang_dict: dict
+        Language dictionary for translations
     bins : int, optional
-        Number of bins in the histogram, by default 20
+        Number of bins for the histogram (default: 20).
 
-    Returns
-    -------
+    Returns:
     None
-        This function displays a Plotly histogram in Streamlit.
+        Displays the histogram in Streamlit.
     """
+
 
     fig = px.histogram(
         sel_fitnah_data,
         x=aggregator,
         nbins=bins,
-        title="Histogram {dtype} {aggregator}, {buffer}m",
+        title=f"{dtype} - {aggregator} - {buffer}m",
         labels={aggregator: aggregator.capitalize()},
         height=550,
         width=500
     )
 
     fig.update_layout(
-        xaxis_title=f"{aggregator.capitalize()} Value",
-        yaxis_title="Frequency",
+        xaxis_title=f"{aggregator.capitalize()}",
+        yaxis_title=lang_dict['frequency'],
         template="plotly_white",
     )
 

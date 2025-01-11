@@ -4,7 +4,7 @@ See the report (in German) from GeoNet and the Canton of Bern [Here](https://geo
 
 ## Usage
 1) Select the datatype to show:
- - **UHI Space (fitnah_ss)**: UHI data for open spaces at two meter.
+ - **UHI Space (fitnah_ss)**: UHI data for open spaces.
  - **UHI Street (fitnah_sv)**: UHI data for streets.
  - **Temperature Layer**: Used to calculate the UHI layers.
 
@@ -19,4 +19,4 @@ The **Count** is particularly important because the UHI Space and UHI Street lay
 This aggregation is useful for comparing the **empirical data** from stations to the **modeled UHI data**.
 
 ## Zoom Note
-Note that you have to zoom in to see the 10 meter buffers - it may look like nothing is appearing !
+Note that you have to zoom in to see the 10 meter buffers - it may look like nothing is appearing ! The buffers are scaled to actual size to give an impression of the size of the data aggregation area.

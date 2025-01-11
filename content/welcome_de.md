@@ -1,34 +1,32 @@
 # Heißer Bieler Sommer
+Diese App visualisiert Daten aus der **Messkampagne Sommer 2023 in Biel/Bienne**, der **Messkampagne Sommer 2022 in Bern** sowie aus dem **FITNAH-3D UHI-Modell** und den **UHI-Daten von Bern**.
 
-Diese App visualisiert Daten aus der **Sommermesskampagne 2023 in Biel/Bienne**, sowie **FITNAH UHI-Modell-Daten** und **UHI-Daten aus Bern**.
+**Sehen Sie sich die Modellierungs-App [hier](https://urbanheatmodel.streamlit.app/) an.**
 
-UHI = Urban Heat Island = Wie viel wärmer es in der Stadt aufgrund der bebauten Umgebung ist.
+UHI = Urbane Wärmeinsel = Wie viel wärmer es in der Stadt aufgrund der bebauten Umgebung ist.
 
 ### Datenquellen
-- **FITNAH-Daten**: Basierend auf dem vom Kanton Bern 2022 in Auftrag gegebenen UHI- und Temperaturmodell.
-- **Digitales Höhenmodell (DEM)**: Bezogen aus SwissTopo Alti-3d über das SwissGeoDownloader-Plugin, verfügbar in QGIS.
-- **Stationsdaten und Hitzeindex-Ergebnisse in Biel**: Erhoben während der **Sommermesskampagne 2023 in Biel**, durchgeführt von Ihrem Autor mit erheblicher Unterstützung des Geographischen Instituts der Universität Bern (GIUB) und der Stadt Biel.
-- **Stationsdaten und Hitzeindex-Ergebnisse in Bern**: Erhoben während der **Sommermesskampagne 2022 in Bern**, durchgeführt vom GIUB und der Stadt Bern.
-- **Meteorologische Daten**: Bezogen von den drei nächstgelegenen automatischen Wetterstationen des SwissMetNet-Netzwerks.
-
+- **FITNAH-Daten**: Stammt aus dem Temperatur- und UHI-Modell, das 2022 vom Kanton Bern in Auftrag gegeben wurde.
+- **Digitales Höhenmodell**: Abgeleitet von SwissTopo Alti-3d über das QGIS-Plugin SwissGeoDownloader.
+- **Stationsdaten und Hitzeindex-Ergebnisse in Biel**: Erhoben während der **Messkampagne Sommer 2023 in Biel**.
+- **Stationsdaten und Hitzeindex-Ergebnisse in Bern**: Erhoben während der **Messkampagne Sommer 2022 in Bern**.
+- **Meteorologische Daten**: Stammt von den drei nächstgelegenen automatischen Wetterstationen des SwissMetNet-Netzwerks bei Biel.
+- **Kartenschichten**: Zugriff über den WMTS-Dienst von SwissTopo.
 ---
 
-### Technologien
-- **Streamlit**: Hauptframework der Anwendung.
+### Erstellt mit
+- **Streamlit**: Haupt-Framework der App.
 - **Plotly**: Für interaktive Diagramme.
-- **PyDeck**: Für dynamische Kartenvisualisierungen.
-- **Geopandas**, **Rasterio**, **Shapely**, **Xarray**, **Numpy**: Für die Datenaufbereitung.
-
+- **Geopandas**, **Rasterio**, **Shapely**, **Xarray**, **Numpy**: Verwendet bei der Datenvorbereitung.
 ---
 
 ### Mehr erfahren
-- **Vollständige Arbeit**: Verfügbar hier, mit ausführlicher Methodik und Analyse.
-- **Replikations-Repository**: Zugriff auf den vollständigen Datensatz und die Skripte [hier](#).
-- **Eingeschränkte App-Daten**: Erkunden Sie das GitHub-Repository für den Datenausschnitt dieser App.
-
+- **Abschlussarbeit**: Verfügbar, sobald ich meine Endnote erhalte...
+- **Limitierte App-Daten**: Erkunden Sie das GitHub-Repository für eine Untermenge der in dieser App verfügbaren Daten.
+- **Andere App**: Sehen Sie sich die andere App [hier](https://urbanheatmodel.streamlit.app/) an.
 ---
 
-### Feedback
-Haben Sie Kommentare, Fragen, Vorschläge oder Kritik? Ich freue mich auf Ihr Feedback!
+### Feedback willkommen
+Haben Sie Kommentare, Fragen, Vorschläge oder Kritik? Ich freue mich, von Ihnen zu hören!
 
 -TGE

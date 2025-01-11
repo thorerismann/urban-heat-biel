@@ -2,11 +2,13 @@ Summer Days & Tropical Nights Visualization
 ---
 ## Overview
 
-This visualization tool allows users to analyze **Summer Days** and **Tropical Nights** based on customizable temperature thresholds. The tool calculates exceedances for each station and provides insights through:
+Analyze the distribution of **Summer Days** and **Tropical Nights** based on customizable temperature thresholds.
 
 - **Summer Days**: Days where the **daily max temperature** exceeds **30 °C**.
+  - $T_{max} > 30$ 
 - **Tropical Nights**: Nights where the **daily min temperature** exceeds **20 °C**.
-- Default thresholds: **30 °C** for Summer Days and **20 °C** for Tropical Nights.
+  - $T_{min} > 20$
+- These are the default thresholds used, the distribution and magnitude can change signficantly if different threhsolds are used. Feel free to explore !
 - Both of these are **common indicators** used by organizations ranging from **The Lancet** to **MeteoSwiss** for understanding the impacts of heatwaves and climate change.
 
 ---

@@ -1,34 +1,32 @@
-# L'Été Chaud de Bienne
+# Été chaud à Bienne
+Cette application visualise les données de la **campagne de mesure de l'été 2023 à Bienne**, de la **campagne de mesure de l'été 2022 à Berne**, ainsi que des données du modèle **FITNAH-3D UHI** et **des UHI de Berne**.
 
-Cette application visualise les données de la **campagne de mesure estivale 2023 à Bienne/Biel**, ainsi que les **données du modèle FITNAH UHI** et les **données UHI de Berne**.
+**Découvrez l'application de modélisation [ici](https://urbanheatmodel.streamlit.app/).**
 
-UHI = Urban Heat Island = Combien il fait plus chaud en ville à cause de l’environnement construit.
+UHI = Île de Chaleur Urbaine = La hausse des températures en milieu urbain due à l'environnement bâti.
 
 ### Sources de données
-- **Données FITNAH** : Issues du modèle UHI et de température commandé par le canton de Berne en 2022.
-- **Modèle numérique d’altitude (DEM)** : Provenant du SwissTopo Alti-3d via le plugin SwissGeoDownloader disponible dans QGIS.
-- **Données des stations et résultats de l’indice de chaleur à Bienne** : Recueillis lors de la **campagne de mesure estivale 2023 à Bienne**, menée par votre auteur avec le soutien significatif de l’Institut de géographie de l’Université de Berne (GIUB) et de la ville de Bienne.
-- **Données des stations et résultats de l’indice de chaleur à Berne** : Recueillis lors de la **campagne de mesure estivale 2022 à Berne**, menée par le GIUB et la ville de Berne.
-- **Données météorologiques** : Issues des trois stations météorologiques automatiques SwissMetNet les plus proches de Bienne.
-
+- **Données FITNAH** : Issues du modèle de température et d'UHI commandé par le canton de Berne en 2022.
+- **Modèle Numérique de Terrain** : Provenant de SwissTopo Alti-3d via le plugin SwissGeoDownloader de QGIS.
+- **Données des Stations et Résultats d'Indice de Chaleur à Bienne** : Collectées pendant la **campagne de mesures de 2023 à Bienne**.
+- **Données des Stations et Résultats d'Indice de Chaleur à Berne** : Collectées pendant la **campagne de mesures de 2022 à Berne**.
+- **Données Météorologiques** : Issues des trois stations automatiques SwissMetNet les plus proches de Bienne.
+- **Couches cartographiques** : Accessibles via le WMTS de SwissTopo.
 ---
 
-### Développé avec
-- **Streamlit** : Cadre principal de l’application.
+### Construit avec
+- **Streamlit** : Cadre principal de l'application.
 - **Plotly** : Pour des graphiques interactifs.
-- **PyDeck** : Pour des visualisations cartographiques dynamiques.
 - **Geopandas**, **Rasterio**, **Shapely**, **Xarray**, **Numpy** : Utilisés pour la préparation des données.
-
 ---
 
-### Pour en savoir plus
-- **Thèse complète** : Disponible ici, avec méthodologie détaillée et analyses.
-- **Référentiel de réplication** : Accédez à l’ensemble des données et scripts [ici](#).
-- **Données limitées de l’application** : Explorez le référentiel GitHub pour le sous-ensemble de données disponible dans cette app.
-
+### En savoir plus
+- **Thèse complète** : Disponible une fois ma note finale reçue...
+- **Données limitées de l'application** : Explorez le référentiel GitHub pour un sous-ensemble de données disponibles dans cette application.
+- **Autre application** : Consultez l'autre application : [ici](https://urbanheatmodel.streamlit.app/).
 ---
 
-### Vos retours
-Des commentaires, questions, suggestions ou critiques ? Je serais ravi de vous lire !
+### Retours bienvenus
+Vous avez des commentaires, questions, suggestions ou critiques ? Je suis à l'écoute !
 
 -TGE

@@ -21,23 +21,19 @@ def plot_fitnah_map(
     maptype: str,
 ) -> None:
     """
-    Render a PyDeck chart for the selected Fitnah data with polygons colored by an aggregator value.
-    Includes a color-scale legend at the bottom.
+    Render a PyDeck map with selected Fitnah data and color polygons by aggregator values.
 
-    Parameters
-    ----------
+    Parameters:
     sel_data : pd.DataFrame
         Filtered DataFrame containing geometry coordinates and aggregator columns.
-        Must include columns: ['geometry_coords', aggregator, 'logger', 'lat', 'lon'].
     aggregator : str
-        The name of the aggregator column to use (e.g., 'min', 'max', 'mean', 'count').
-    maptype: str
-        The name of the map to use
+        The column for color scaling (e.g., 'mean', 'max').
+    maptype : str
+        Selected SwissTopo basemap.
 
-    Returns
-    -------
+    Returns:
     None
-        This function displays the PyDeck chart and a color legend directly in the Streamlit interface.
+        Displays the map in Streamlit.
     """
     # Normalize values for color
     if 'logger' in sel_data.columns:
@@ -63,26 +59,31 @@ def plot_fitnah_map(
 
     st.plotly_chart(final_fig)
 
-def sdtn_map(data: pd.DataFrame, data_col: str, metric: str, threshold: int, maptype: str):
+def sdtn_map(
+    data: pd.DataFrame,
+    data_col: str,
+    metric: str,
+    threshold: int,
+    maptype: str,
+) -> pd.DataFrame:
     """
-    Tab for visualizing Summer Days and Tropical Nights with interactive thresholds.
+    Visualize Summer Days and Tropical Nights with adjustable thresholds.
 
-    Parameters
-    ----------
+    Parameters:
     data : pd.DataFrame
-        DataFrame containing:
-          - 'x', 'y': Coordinates for the map.
-          - 'logger': Unique station identifier.
-          - 'Name': Station name.
-          - 'daily_max', 'daily_min': Temperature metrics for calculation.
-    data_col:
-        column name of data to use for thresholding (daily max or daily min)
-    metric:
-        matric user (tn or sd)
-    threshold:
-        threshold to use for tn or sd calculation
-    maptype:
-        maptype to use in background
+        DataFrame with temperature data for analysis.
+    data_col : str
+        Column for thresholding ('daily_max' or 'daily_min').
+    metric : str
+        Selected metric (e.g., 'Summer Days', 'Tropical Nights').
+    threshold : int
+        Temperature threshold for filtering.
+    maptype : str
+        Selected SwissTopo basemap.
+
+    Returns:
+    pd.DataFrame
+        Aggregated data for histogram plotting.
     """
     data["exceed_count"] = (data[data_col] > threshold).astype(int)
     reference_threshold = 30 if "Summer" in metric else 20
@@ -118,39 +119,22 @@ def plot_uhi_ci_map(
     maptype: str,
 ) -> None:
     """
-    Render a PyDeck map for UHI or City Index station data at a specific hour,
-    with a hover tooltip (showing a 24-hour table) and a color-scale legend.
+    Render a PyDeck map for UHI or City Index data at a specific hour.
 
-    Parameters
-    ----------
+    Parameters:
     station_data : pd.DataFrame
-        DataFrame containing station data with columns:
-          - 'logger'
-          - 'Name'
-          - 'hour' (0..23)
-          - 'x', 'y' (map coordinates)
-          - The 'value_column' chosen, e.g. 'uhi' or 'city_index'
+        Station data with hourly values.
     value_column : str
-        The column to visualize, e.g. 'uhi' or 'city_index'.
-    full_data: pd.DataFrame
-        For making the tooltip
+        Data column for visualization (e.g., 'uhi', 'city_index').
     hour : int
-        The specific hour (0..23) for the main display on the map.
-    maptype: str
-        The basemap for display
+        Hour for filtering data.
+    maptype : str
+        Selected SwissTopo basemap.
 
-    Returns
-    -------
+    Returns:
     None
-        Displays a PyDeck chart in Streamlit and a color-scale legend below.
-        :param maptype:
+        Displays the map in Streamlit.
     """
-
-    # 1) Build an HTML table for all 24 hours, per logger/Name
-    # --------------------------------------------------------
-    # Merge the HTML table into the original data
-    # 2) Filter to selected hour for the map display
-    # ---------------------------------------------
     hour_data = station_data[station_data["hour"] == hour].copy()
     hour_data[value_column] = np.round(hour_data[value_column], 2)
 
@@ -160,7 +144,7 @@ def plot_uhi_ci_map(
         lon="x",
         hover_name="Name",
         hover_data=['city_index', 'uhi'],
-        color=value_column,  # Assigns the column to the color scale
+        color=value_column,
         zoom=12,
         height=500,
     )
@@ -169,11 +153,29 @@ def plot_uhi_ci_map(
     final_fig = update_with_swisstopo(fig, maptype)
     st.plotly_chart(final_fig)
 
-def plot_geodata(df, selection, maptype, langdict):
-    """Plot polygons from geometry_coords plus scatter circles at each [lon, lat].
-    :param langdict:
+def plot_geodata(
+    df: pd.DataFrame,
+    selection: str,
+    maptype: str,
+    langdict: dict,
+) -> None:
     """
-    st.write('starting plot')
+    Plot polygons and scatter points from geospatial data.
+
+    Parameters:
+    df : pd.DataFrame
+        DataFrame with geospatial data.
+    selection : str
+        Column for color scaling.
+    maptype : str
+        Selected SwissTopo basemap.
+    langdict : dict
+        Language dictionary for localization.
+
+    Returns:
+    None
+        Displays the map in Streamlit.
+    """
     rename_map = {str(k): v for k, v in langdict['description_dict'].items()}
     newdf = df.rename(columns=rename_map).copy()
 
@@ -197,7 +199,20 @@ def plot_geodata(df, selection, maptype, langdict):
     st.plotly_chart(final_fig)
 
 
-def update_with_swisstopo(fig, maptype):
+def update_with_swisstopo(fig, maptype: str) -> "plotly.graph_objects.Figure":
+    """
+    Updates a Plotly map with SwissTopo layers based on the selected map type.
+
+    Parameters:
+    fig : plotly.graph_objects.Figure
+        The base Plotly figure.
+    maptype : str
+        Selected SwissTopo basemap.
+
+    Returns:
+    plotly.graph_objects.Figure
+        Updated figure with SwissTopo basemap applied.
+    """
     if maptype in ['Carte nationale suisse en couleur', 'Schweizer Landeskarte Farbe', 'Swiss National Map Color']:
         mapstring = 'https://wmts.geo.admin.ch/1.0.0/ch.swisstopo.pixelkarte-farbe/default/current/3857/{z}/{x}/{y}.jpeg'
     elif maptype == 'SwissAlti3D':

@@ -1,10 +1,39 @@
+"""
+Module: structure
+==================
+
+This module provides utility functions for managing file paths, language dictionaries,
+and markdown loading. These utilities support the data processing and visualization
+in the application.
+
+Functions:
+- get_files
+- get_lang_dict
+- load_markdown
+"""
+
+
 import streamlit as st
 from pathlib import Path
 from content.lang_dict import eng_dict, de_dict, fr_dict
 
 CONTENT_DIR = Path.cwd() / "content"
 
-def get_files(city, period):
+def get_files(city: str, period: str) -> tuple:
+    """
+    Retrieve file paths for data files based on the selected city and period.
+
+    Parameters:
+    city : str
+        Name of the city ('bern' or 'biel').
+    period : str
+        Time period ('Main Heatwave' or other periods).
+
+    Returns:
+    tuple
+        Paths for land use, Fitnah, UHI, temperature stats, and SD/TN files.
+    """
+
     fitnah_path = Path.cwd() / 'data' / city / 'data_viz_fitnah.csv'
     landuse_path = Path.cwd() / 'data' / city / 'data_viz_land_use.csv'
 
@@ -39,7 +68,15 @@ def get_files(city, period):
     return landuse_path, fitnah_path, uhi_path, tempstats, sdtn
 
 
-def get_lang_dict():
+def get_lang_dict() -> dict:
+    """
+    Get the language dictionary based on the user's selection.
+
+    Returns:
+    dict
+        Language dictionary for the selected language (EN, DE, or FR).
+    """
+
     lang = st.selectbox('Choose Language / choisir langue / Sprache wählen', ['DE', 'EN', 'FR'])
     if lang == 'DE':
         return de_dict
@@ -53,16 +90,15 @@ def load_markdown(file_path: Path) -> str:
     """
     Load the content of a markdown file.
 
-    Parameters
-    ----------
+    Parameters:
     file_path : Path
         Path to the markdown file.
 
-    Returns
-    -------
+    Returns:
     str
-        Content of the markdown file as a string.
+        Content of the markdown file as a string, or an error message if the file is not found.
     """
+
     try:
         with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
