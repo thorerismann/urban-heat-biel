@@ -130,7 +130,9 @@ de_dict = {
     'welcome_message': """**Wählen Sie unten eine Sprache aus** und klicken Sie auf den Willkommens-Text, um mehr über das Projekt zu erfahren.
             Ansonsten können Sie die Registerkarten erkunden!
             _Hinweis: Die vollständige Übersetzung, z. B. bei Diagrammen, ist noch nicht abgeschlossen._
-            """
+            """,
+    'frequency': 'Frequenz',
+
 }
 fr_dict = {
     'fitnah_md_t': 'Afficher l’explication de FITNAH',
@@ -199,6 +201,7 @@ fr_dict = {
     'nights_selection': "Nuits tropicales",
     'welcome_message': """**Sélectionnez une langue ci-dessous** et cliquez sur le texte de bienvenue pour en savoir plus sur le projet.
             Sinon, explorez librement chaque onglet !
-            _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._"""
+            _Remarque : Les traductions complètes, notamment sur les graphiques, ne sont pas encore terminées._""",
+    'frequency': 'fréquence'
 
 }
